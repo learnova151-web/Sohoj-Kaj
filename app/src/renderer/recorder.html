@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>recorder</title>
+</head>
+<body>
+<script>
+let ctx = null;
+let node = null;
+let stream = null;
+let source = null;
+let active = false;
+
+async function startCapture() {
+  if (active) return;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+    });
+    ctx = new AudioContext();
+    await ctx.audioWorklet.addModule('../worklet/recorder-worklet.js');
+    source = ctx.createMediaStreamSource(stream);
+    node = new AudioWorkletNode(ctx, 'capture');
+    node.port.onmessage = e => {
+      if (active) window.sohoj.recSend(e.data, ctx.sampleRate);
+    };
+    source.connect(node);
+    node.connect(ctx.destination);
+    active = true;
+  } catch (err) {
+    active = false;
+  }
+}
+
+function stopCapture() {
+  if (!active) {
+    window.sohoj.recEnd();
+    return;
+  }
+  active = false;
+  try {
+    if (node) node.disconnect();
+    if (source) source.disconnect();
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    if (ctx) ctx.close();
+  } catch (err) {
+    /* ignore */
+  }
+  node = null;
+  stream = null;
+  ctx = null;
+  source = null;
+  setTimeout(() => window.sohoj.recEnd(), 60);
+}
+
+window.sohoj.onRecCommand(cmd => {
+  if (cmd === 'start') startCapture();
+  if (cmd === 'stop') stopCapture();
+});
+</script>
+</body>
+</html>

@@ -1,52 +1,87 @@
-# Shobdo — Landing Page Rebuild
+# Sohoj Kaj (সহজ কাজ)
 
-A faithful, feature-complete rebuild of the Shobdo (শব্দ) landing page — free Bangla
-voice typing for Mac and Windows by Khalid Farhan.
+Free voice typing for Mac and Windows: press one key, speak Bangla or English,
+and the words are typed wherever your cursor is. Works offline, or in the cloud
+with your own Google Gemini key.
 
-## Features (all covered)
+## What is in this repository
 
-1. **Hero** — headline, subtext, Mac/Windows download buttons (platform-aware styling)
-2. **App window mockup** — last Bangla sentence in large grid letters, the two key
-   chips (বাংলা / English), and earlier dictations
-3. **Interactive "Hold. Speak. Let go." demo** — hold the button (or hold `Space`)
-   and your own speech is transcribed live in the browser via the Web Speech API,
-   with a বাংলা (bn-BD) / English (en-US) toggle, interim + final text, animated
-   listening indicator, and graceful error messages (mic blocked, no speech,
-   unsupported browser)
-4. **One key for each language** — বাংলা → Right Command (Windows: Right Alt),
-   English → Fn (Windows: Right Ctrl), changeable in Settings
-5. **Accuracy comparison** — animated bars: Whisper large-v3-turbo (42 wrong
-   letters in 100), Shobdo offline (10), Shobdo cloud with Gemini (8), with the
-   October 2026 test note
-6. **Offline vs Cloud** — both cards with all bullets and the one-click switch note
-7. **Set up in two minutes** — Download → Allow → Hold
-8. **FAQ** — 6 questions, accordion (one open at a time)
-9. **Final CTA** — real download buttons pointing to the official release assets:
-   - Mac Apple Silicon: `Shobdo-mac-apple-silicon.dmg`
-   - Mac Intel: `Shobdo-mac-intel.dmg`
-   - Windows 64-bit: `Shobdo-windows-x64-setup.exe`
-   (hosted at `khalidfarhanfarlu/shobdo-releases`, `releases/latest/download/...`)
-10. **Footer** — attribution to Khalid Farhan, Handy (open source) and Bengali.AI
-
-Also included: sticky top nav, scroll-reveal animations, reduced-motion support,
-responsive layout, Bangla web fonts (Noto Serif Bengali / Hind Siliguri), SEO +
-Open Graph meta, inline SVG favicon.
-
-## Run
-
-Static site — no build step.
-
-```bash
-python3 -m http.server 8080
-# open http://localhost:8080
+```
+index.html, styles.css, app.js   landing page (also works as the GitHub Pages site)
+app/                             the desktop app (Electron)
+  src/main/                      main process: shortcuts, recorder, transcriber, typing
+  src/renderer/                  HUD overlay, settings window, hidden recorder page
+  src/worklet/                   AudioWorklet PCM capture
+  src/shared/constants.js        model URL, languages, default settings
+build/                           app icons
+scripts/make_icon.py             icon generator
+.github/workflows/build.yml      builds Mac + Windows installers automatically
 ```
 
-The live speech demo needs Chrome or Edge (built-in Web Speech API) and mic
-permission; on other browsers the hold interaction still works with a clear notice.
+## How the app works
 
-## Files
+1. You press the Bangla shortcut (`Alt+Shift+B` by default) or the English one
+   (`Alt+Shift+E`). Both are changeable in Settings.
+2. The app records your microphone and shows a small overlay.
+3. When you pause for a moment (or press the shortcut again, or hit the maximum
+   length), the recording stops and is transcribed:
+   - **Offline**: a bundled `whisper-cli` binary (whisper.cpp) runs the Bangla
+     Whisper Medium fine-tune by Bengali.AI (Apache-2.0, GGUF Q8_0, about 830 MB,
+     downloaded once from Settings). Nothing leaves your computer.
+   - **Cloud**: the audio goes to Google Gemini with your own free API key —
+     the most accurate mode, and the best at Bangla mixed with English.
+4. The text is typed into whatever app you were using (via a paste simulation),
+   or copied to the clipboard if you turn auto-typing off.
 
-- `index.html` — full page, all sections
-- `styles.css` — design system, responsive + animations
-- `app.js` — demo logic, chart animation, FAQ accordion, reveal-on-scroll,
-  platform detection
+Why press-and-pause instead of hold-and-release: Electron cannot reliably detect
+the release of a global shortcut across both platforms, so the app starts on the
+key press and finishes on a short silence, which feels the same in practice.
+
+## Run it from source
+
+```bash
+cd app
+npm install
+npm start
+```
+
+Offline mode needs the model: open Settings (tray icon > Settings) and click
+"Download model", or choose any local whisper `.ggml`/`.gguf` file. It also needs
+a `whisper-cli` binary in `app/resources/whisper/` — the build workflow produces
+it, or build whisper.cpp yourself:
+
+```bash
+git clone https://github.com/ggml-org/whisper.cpp
+cmake -S whisper.cpp -B whisper.cpp/build -DCMAKE_BUILD_TYPE=Release
+cmake --build whisper.cpp/build --config Release --target whisper-cli
+mkdir -p app/resources/whisper && cp whisper.cpp/build/bin/whisper-cli app/resources/whisper/
+```
+
+## Build installers
+
+Push a tag like `v0.1.0` (or run the workflow manually from the Actions tab).
+GitHub Actions builds `whisper.cpp` and the Electron app on macOS and Windows
+runners and uploads:
+
+- `Sohoj-Kaj-mac-arm64.dmg` (Apple Silicon)
+- `Sohoj-Kaj-mac-x64.dmg` (Intel)
+- `Sohoj-Kaj-win-x64.exe` (Windows 10/11, 64-bit)
+
+Tagged builds are attached to the GitHub release, which is exactly where the
+landing page download buttons point.
+
+## First-run permissions
+
+- **Microphone**: the app asks the first time you dictate.
+- **macOS Accessibility**: needed to type into other apps
+  (System Settings > Privacy & Security > Accessibility).
+- The installers are not code-signed yet, so Windows shows "Windows protected
+  your PC" (More info > Run anyway) and macOS needs a right-click > Open once.
+
+## Credits
+
+- Offline speech engine: [whisper.cpp](https://github.com/ggml-org/whisper.cpp) (MIT)
+- Offline Bangla model: Bengali.AI Whisper Medium fine-tune (Apache-2.0), GGUF Q8_0
+- Interaction design inspired by the open-source app
+  [Handy](https://github.com/cjpais/Handy) (MIT)
+- Cloud mode: your own Google Gemini key; audio goes to Google for transcription only

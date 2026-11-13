@@ -1,0 +1,61 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: "Hind Siliguri", -apple-system, "Segoe UI", sans-serif;
+  background: #FAF6EF;
+  color: #1E1A16;
+  line-height: 1.55;
+}
+
+main { max-width: 640px; margin: 0 auto; padding: 28px 24px 40px; }
+
+h1 { font-size: 1.5rem; margin-bottom: 18px; }
+h2 { font-size: 1rem; margin-bottom: 10px; color: #5C544A; text-transform: uppercase; letter-spacing: 0.06em; }
+
+section { background: #FFFDF8; border: 1px solid #E4DACA; border-radius: 14px; padding: 18px; margin-bottom: 16px; }
+
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .modes { grid-template-columns: 1fr; } }
+
+.mode-card {
+  display: flex; gap: 10px; align-items: flex-start;
+  border: 2px solid #E4DACA; border-radius: 12px; padding: 12px; cursor: pointer;
+}
+.mode-card:has(input:checked) { border-color: #1E6E4E; background: rgba(30, 110, 78, 0.05); }
+.mode-card input { margin-top: 4px; }
+.mode-card p { font-size: 0.85rem; color: #5C544A; }
+
+.field { display: block; margin-bottom: 12px; }
+.field span { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; }
+.field input {
+  width: 100%; padding: 9px 12px; border: 1px solid #E4DACA; border-radius: 9px;
+  font-family: inherit; font-size: 0.95rem; background: #FFF;
+}
+
+.hotkey { text-align: center; cursor: pointer; letter-spacing: 0.04em; }
+.hotkey.capturing { border-color: #B3402E; background: #FFF4F0; }
+
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.row.keys { display: grid; grid-template-columns: 1fr 1fr; }
+
+.btn {
+  border: 0; border-radius: 999px; padding: 10px 20px;
+  background: #B3402E; color: #FFF8F0; font-weight: 700; font-family: inherit;
+  font-size: 0.92rem; cursor: pointer;
+}
+.btn:disabled { opacity: 0.5; cursor: default; }
+.btn.ghost { background: transparent; border: 1.5px solid #1E1A16; color: #1E1A16; }
+
+.check { display: flex; gap: 9px; align-items: flex-start; font-size: 0.92rem; margin-bottom: 14px; }
+.check input { margin-top: 4px; }
+
+.hint { font-size: 0.85rem; color: #5C544A; margin-top: 8px; }
+.hint a { color: #8F3021; }
+
+.progress { height: 10px; background: #E9E1D2; border-radius: 999px; overflow: hidden; margin-top: 12px; }
+.progress .bar { height: 100%; width: 0; background: #1E6E4E; transition: width 0.3s ease; }
+
+.hidden { display: none; }
+
+footer { font-size: 0.82rem; color: #5C544A; text-align: center; }
+footer a { color: #8F3021; }

@@ -1,0 +1,23 @@
+{
+  "name": "sohoj-kaj",
+  "productName": "Sohoj Kaj",
+  "version": "0.1.0",
+  "description": "Sohoj Kaj (সহজ কাজ): press one key, speak Bangla or English, and it types in any app. Offline or in the cloud.",
+  "main": "src/main/main.js",
+  "license": "MIT",
+  "author": "Sohoj Kaj Team",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/learnova151-web/Sohoj-Kaj"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

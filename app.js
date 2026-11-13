@@ -142,7 +142,7 @@
       recog = buildRecognizer();
       try { recog.start(); } catch (_) { /* already started */ }
     } else {
-      setNote('This browser has no built-in speech recognition. The real Shobdo app does this offline \u2014 try Chrome or Edge to hear yourself typed here.');
+      setNote('This browser has no built-in speech recognition. The real Sohoj Kaj app does this offline \u2014 try Chrome or Edge to hear yourself typed here.');
     }
   }
 

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sohoj Kaj Settings</title>
+<link rel="stylesheet" href="settings.css">
+</head>
+<body>
+<main>
+  <h1>Settings</h1>
+
+  <section>
+    <h2>Mode</h2>
+    <div class="modes">
+      <label class="mode-card">
+        <input type="radio" name="mode" value="offline">
+        <div>
+          <strong>Offline</strong>
+          <p>Works without internet. Your voice never leaves your computer. Needs a one-time model download of about 830 MB.</p>
+        </div>
+      </label>
+      <label class="mode-card">
+        <input type="radio" name="mode" value="cloud">
+        <div>
+          <strong>Cloud (Google Gemini)</strong>
+          <p>The most accurate, best for Bangla mixed with English. Uses your own free Gemini key. Audio goes to Google, never to us.</p>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <section id="cloud-box" class="hidden">
+    <h2>Google Gemini</h2>
+    <label class="field">
+      <span>Gemini API key</span>
+      <input type="password" id="gemini-key" placeholder="Paste your key from aistudio.google.com">
+    </label>
+    <label class="field">
+      <span>Model</span>
+      <input type="text" id="gemini-model" placeholder="gemini-2.5-flash">
+    </label>
+    <p class="hint">Get a free key at <a href="#" id="link-aistudio">aistudio.google.com</a>. Google has a free tier with daily limits.</p>
+  </section>
+
+  <section id="offline-box" class="hidden">
+    <h2>Offline model</h2>
+    <p class="hint" id="model-status">Checking…</p>
+    <div class="row">
+      <button id="btn-download" class="btn">Download model (about 830 MB)</button>
+      <button id="btn-choose" class="btn ghost">Use a local model file…</button>
+    </div>
+    <div class="progress hidden" id="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+    <p class="hint" id="progress-label"></p>
+    <p class="hint">The Bangla model is the Bengali.AI Whisper Medium fine-tune (Apache-2.0), converted to GGUF.</p>
+  </section>
+
+  <section>
+    <h2>Shortcuts</h2>
+    <p class="hint">Press once to start, speak, then pause — the words are typed automatically. Press the same keys again to stop early.</p>
+    <div class="row keys">
+      <label class="field">
+        <span>বাংলা</span>
+        <input type="text" id="shortcut-bn" class="hotkey" readonly placeholder="Click and press keys">
+      </label>
+      <label class="field">
+        <span>English</span>
+        <input type="text" id="shortcut-en" class="hotkey" readonly placeholder="Click and press keys">
+      </label>
+    </div>
+  </section>
+
+  <section>
+    <h2>Typing</h2>
+    <label class="check">
+      <input type="checkbox" id="auto-paste">
+      <span>Type the text where my cursor is (turn off to only copy to clipboard)</span>
+    </label>
+    <label class="field">
+      <span>Finish after this much silence (seconds)</span>
+      <input type="number" id="silence" min="0.6" max="6" step="0.1">
+    </label>
+    <label class="field">
+      <span>Maximum length of one dictation (seconds)</span>
+      <input type="number" id="max-sec" min="5" max="300" step="5">
+    </label>
+  </section>
+
+  <footer>
+    <p>Sohoj Kaj is free and open. Built on <a href="#" data-url="https://github.com/cjpais/Handy">Handy</a>'s ideas; offline Bangla model by <a href="#" data-url="https://huggingface.co/bengaliAI/tugstugi_bengaliai-asr_whisper-medium">Bengali.AI</a> (Apache-2.0).</p>
+  </footer>
+</main>
+<script src="settings.js"></script>
+</body>
+</html>
