@@ -28,7 +28,7 @@ jobs:
         shell: bash
         run: |
           git clone --depth 1 --branch v1.7.5 https://github.com/ggml-org/whisper.cpp whisper-src
-          cmake -S whisper-src -B whisper-src/build -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_EXAMPLES=OFF -DWHISPER_BUILD_SERVER=OFF -DGGML_BUILD_TESTS=OFF
+          cmake -S whisper-src -B whisper-src/build -DCMAKE_BUILD_TYPE=Release -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF -DGGML_BUILD_TESTS=OFF
           cmake --build whisper-src/build --config Release --target whisper-cli -j 4
           mkdir -p app/resources/whisper
           if [ -f whisper-src/build/bin/Release/whisper-cli.exe ]; then
