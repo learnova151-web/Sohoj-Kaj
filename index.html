@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shobdo (শব্দ): speak Bangla, it types</title>
+<meta name="description" content="Free voice typing for Mac and Windows. Bangla and English, offline or in the cloud. Hold one key, speak, and your words appear in any app.">
+<meta property="og:title" content="Shobdo (শব্দ): speak Bangla, it types">
+<meta property="og:description" content="Free voice typing for Mac and Windows. Hold one key, talk, and your words appear in any app.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23B3402E'/%3E%3Ctext x='32' y='44' font-size='34' text-anchor='middle' fill='%23FFF8F0' font-family='serif'%3E%E0%A6%B6%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#top"><span class="brand-mark">শ</span> Shobdo</a>
+  <nav class="topnav">
+    <a href="#demo">Try it</a>
+    <a href="#keys">Keys</a>
+    <a href="#accuracy">Accuracy</a>
+    <a href="#faq">FAQ</a>
+    <a class="btn btn-small btn-solid" href="#download">Download</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <h1>Speak Bangla.<br><em>Shobdo types it.</em></h1>
+      <p class="lede">Free voice typing for Mac and Windows. Hold one key, say what you want, and the words land in whatever app you are using.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" id="hero-mac" href="https://github.com/khalidfarhanfarlu/shobdo-releases/releases/latest/download/Shobdo-mac-apple-silicon.dmg">Download for Mac</a>
+        <a class="btn btn-outline" id="hero-win" href="https://github.com/khalidfarhanfarlu/shobdo-releases/releases/latest/download/Shobdo-windows-x64-setup.exe">Windows</a>
+      </div>
+
+      <!-- App window mockup -->
+      <div class="app-shot reveal" role="img" aria-label="The Shobdo window: the last Bangla sentence in large grid letters, the Bangla and English keys, and earlier dictations">
+        <div class="app-window">
+          <div class="app-titlebar">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="app-title">Shobdo</span>
+            <span class="app-mode">Offline</span>
+          </div>
+          <div class="app-body">
+            <p class="app-label">Last dictation</p>
+            <div class="grid-sentence" id="mock-sentence"></div>
+            <div class="app-keys">
+              <div class="key-chip key-bn">
+                <span class="key-lang">বাংলা</span>
+                <span class="key-cap">⌘ Right Command</span>
+              </div>
+              <div class="key-chip key-en">
+                <span class="key-lang">English</span>
+                <span class="key-cap">Fn</span>
+              </div>
+            </div>
+            <div class="app-history">
+              <p class="app-label">Earlier</p>
+              <div class="history-item"><span class="t">১০:৪২</span> আজকের মিটিংটা চারটায় সরিয়ে দিও</div>
+              <div class="history-item"><span class="t">১০:৩৯</span> Thanks for the file, I will review it tonight</div>
+              <div class="history-item"><span class="t">১০:৩৫</span> কাল সকালে ডাক্তারের appointment আছে</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTERACTIVE DEMO ============ -->
+  <section class="section demo-section" id="demo">
+    <div class="wrap">
+      <h2>Hold. Speak. Let go.</h2>
+      <p class="section-lede">That is the entire app. Test the hold right here: in Shobdo you hold a key instead of this button, and the words you say show up on screen.</p>
+
+      <div class="demo-card reveal">
+        <div class="demo-lang" role="tablist" aria-label="Demo language">
+          <button class="lang-btn active" data-lang="bn-BD" role="tab" aria-selected="true">বাংলা</button>
+          <button class="lang-btn" data-lang="en-US" role="tab" aria-selected="false">English</button>
+        </div>
+
+        <div class="demo-output" id="demo-output" aria-live="polite">
+          <p class="demo-placeholder" id="demo-placeholder">Hold the button and say something&hellip;</p>
+        </div>
+
+        <div class="demo-controls">
+          <button class="hold-btn" id="hold-btn" aria-pressed="false">
+            <span class="hold-mic" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v1a7 7 0 0 0 14 0v-1"/><line x1="12" y1="18" x2="12" y2="22"/></svg>
+            </span>
+            <span class="hold-label">Hold to talk</span>
+          </button>
+          <div class="wave" id="wave" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="hold-hint">or hold <kbd>Space</kbd> &middot; release to finish</p>
+        </div>
+
+        <p class="demo-note" id="demo-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KEYS ============ -->
+  <section class="section" id="keys">
+    <div class="wrap">
+      <h2>One key for each language.</h2>
+      <div class="key-grid">
+        <div class="key-card reveal">
+          <div class="key-display bn"><span class="kd-lang">বাংলা</span><span class="kd-cap">Right Command</span></div>
+          <p>Proper Bangla script. A sentence that mixes Bangla and English works too.</p>
+        </div>
+        <div class="key-card reveal">
+          <div class="key-display en"><span class="kd-lang">English</span><span class="kd-cap">Fn</span></div>
+          <p>Tidy English with punctuation added for you, ready for emails and messages.</p>
+        </div>
+      </div>
+      <p class="windows-note reveal"><strong>On Windows:</strong> Right Alt for Bangla, Right Ctrl for English. You can change both in Settings.</p>
+    </div>
+  </section>
+
+  <!-- ============ ACCURACY ============ -->
+  <section class="section alt" id="accuracy">
+    <div class="wrap">
+      <h2>Other tools were not made for Bangla.</h2>
+      <blockquote class="pull-quote reveal">
+        <p>&ldquo;I dictate in both English and Bangla, and every voice typing tool I tried mangled my Bangla. So I ran 13 speech engines against 110 Bangla recordings and built Shobdo on the ones that performed best.&rdquo;</p>
+        <footer>Khalid Farhan</footer>
+      </blockquote>
+
+      <div class="chart reveal" id="chart">
+        <div class="chart-row" data-value="42">
+          <div class="chart-head"><span class="chart-name">Whisper large-v3-turbo, the model most dictation apps run</span><span class="chart-val">42 wrong letters in 100</span></div>
+          <div class="chart-track"><div class="chart-bar bad"></div></div>
+        </div>
+        <div class="chart-row" data-value="10">
+          <div class="chart-head"><span class="chart-name strong">Shobdo offline, on your computer</span><span class="chart-val">10 wrong letters in 100</span></div>
+          <div class="chart-track"><div class="chart-bar good"></div></div>
+        </div>
+        <div class="chart-row" data-value="8">
+          <div class="chart-head"><span class="chart-name strong">Shobdo cloud, with Google Gemini</span><span class="chart-val">8 wrong letters in 100</span></div>
+          <div class="chart-track"><div class="chart-bar best"></div></div>
+        </div>
+        <p class="chart-note">Our test, October 2026: 110 clips of read Bangla, Bangladeshi phone recordings and Bangla mixed with English. Lower is better.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OFFLINE VS CLOUD ============ -->
+  <section class="section" id="modes">
+    <div class="wrap">
+      <h2>Free on your computer, or sharper in the cloud.</h2>
+      <div class="mode-grid">
+        <div class="mode-card reveal">
+          <h3>Offline</h3>
+          <ul>
+            <li>No internet connection needed.</li>
+            <li>Your voice stays entirely on your computer.</li>
+            <li>The Bangla model is a one-time download, roughly 830&nbsp;MB.</li>
+          </ul>
+        </div>
+        <div class="mode-card reveal">
+          <h3>Cloud</h3>
+          <ul>
+            <li>Highest accuracy, especially for Bangla mixed with English.</li>
+            <li>Runs on your own free Google Gemini key.</li>
+            <li>Recordings are sent to Google for transcription, never to me.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="windows-note reveal">Switch between them any time with one click in the app.</p>
+    </div>
+  </section>
+
+  <!-- ============ SETUP ============ -->
+  <section class="section alt" id="setup">
+    <div class="wrap">
+      <h2>Set up in two minutes.</h2>
+      <ol class="steps">
+        <li class="reveal">
+          <span class="step-num">1</span>
+          <h3>Download</h3>
+          <p>Pick Mac or Windows below, then open the file you get.</p>
+        </li>
+        <li class="reveal">
+          <span class="step-num">2</span>
+          <h3>Allow</h3>
+          <p>Give Shobdo permission to use your microphone and to type.</p>
+        </li>
+        <li class="reveal">
+          <span class="step-num">3</span>
+          <h3>Hold</h3>
+          <p>Hold Right Command, say your Bangla sentence, release.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq">
+    <div class="wrap narrow">
+      <h2>Questions</h2>
+      <div class="faq-list">
+        <details class="faq reveal">
+          <summary>Is it really free?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Yes. There is no account, trial or card. Offline mode costs nothing to run. Cloud mode runs on your own Google Gemini key: Google offers a free tier with daily limits, and anything beyond that is billed by Google directly to you, not by me.</p></div>
+        </details>
+        <details class="faq reveal">
+          <summary>Which computers does it run on?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Any Mac with Apple Silicon (M1 or later) or an Intel chip, running macOS 10.15 or newer, plus 64-bit Windows 10 or 11.</p></div>
+        </details>
+        <details class="faq reveal">
+          <summary>Windows says &ldquo;Windows protected your PC&rdquo;. Is that safe?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Windows shows that warning for new apps it has not seen often enough yet. Choose More info, then Run anyway. On Mac, the app is signed and verified by Apple.</p></div>
+        </details>
+        <details class="faq reveal">
+          <summary>Where do my recordings go?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>In offline mode, nowhere at all: everything stays on your machine. In cloud mode, each recording is sent to Google for transcription using your key. I never see your recordings or your text.</p></div>
+        </details>
+        <details class="faq reveal">
+          <summary>Does it work in every app?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Everywhere you can type: Facebook, WhatsApp, Gmail, Word, Google Docs, the browser. Shobdo types the text right where your cursor sits.</p></div>
+        </details>
+        <details class="faq reveal">
+          <summary>Can I change the keys?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-body"><p>Yes, from Settings. By default Bangla is Right Command and English is Fn on Mac, while Windows uses Right Alt and Right Ctrl.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section cta" id="download">
+    <div class="wrap">
+      <h2>Start writing Bangla with your voice.</h2>
+      <div class="dl-grid">
+        <a class="dl-card reveal" href="https://github.com/khalidfarhanfarlu/shobdo-releases/releases/latest/download/Shobdo-mac-apple-silicon.dmg">
+          <span class="dl-os">Mac</span>
+          <span class="dl-detail">Apple Silicon, M1 or newer</span>
+          <span class="dl-btn">Download .dmg</span>
+        </a>
+        <a class="dl-card reveal" href="https://github.com/khalidfarhanfarlu/shobdo-releases/releases/latest/download/Shobdo-mac-intel.dmg">
+          <span class="dl-os">Mac</span>
+          <span class="dl-detail">Intel</span>
+          <span class="dl-btn">Download .dmg</span>
+        </a>
+        <a class="dl-card reveal" href="https://github.com/khalidfarhanfarlu/shobdo-releases/releases/latest/download/Shobdo-windows-x64-setup.exe">
+          <span class="dl-os">Windows</span>
+          <span class="dl-detail">Windows 10 or 11, 64-bit</span>
+          <span class="dl-btn">Download .exe</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p>Free, made by Khalid Farhan. Built on the open-source app <a href="https://github.com/cjpais/Handy" target="_blank" rel="noopener">Handy</a>. The offline Bangla model is by <a href="https://huggingface.co/bengaliAI/tugstugi_bengaliai-asr_whisper-medium" target="_blank" rel="noopener">Bengali.AI</a>.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
